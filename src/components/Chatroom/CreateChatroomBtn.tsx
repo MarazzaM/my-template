@@ -1,6 +1,6 @@
-"use client"
-import axios from 'axios';
-import { Button } from '@/components/ui/button';
+"use client";
+import axios from "axios";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,12 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Swal from 'sweetalert2';
-import { useStore } from '@/store/store';
-import { useEffect, useState } from 'react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Swal from "sweetalert2";
+import { useStore } from "@/store/store";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -26,25 +26,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Link from 'next/link';
+import Link from "next/link";
+import { MessageCircleCode } from "lucide-react";
 
 export function ChatroomManagement(props) {
   const [chatRooms, setChatRooms] = useState([]);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const startLogin = useStore((state) => state.startLogin);
-  const email = props.email
+  const email = props.email;
   startLogin(email);
-console.log(email)
   useEffect(() => {
     // Fetch chatrooms data from the API
     const fetchChatRooms = async () => {
       try {
-        const response = await fetch('/api/chatrooms');
+        const response = await fetch("/api/chatrooms");
         const data = await response.json();
         setChatRooms(data.chatRooms);
       } catch (error) {
-        console.error('Error fetching chatrooms:', error.message);
+        console.error("Error fetching chatrooms:", error.message);
       }
     };
 
@@ -58,9 +58,9 @@ console.log(email)
 
   const Toast = Swal.mixin({
     toast: true,
-    position: 'bottom-right',
+    position: "bottom-right",
     customClass: {
-      popup: 'colored-toast',
+      popup: "colored-toast",
     },
     showConfirmButton: false,
     timer: 2000,
@@ -70,37 +70,41 @@ console.log(email)
   const addChatRoom = async () => {
     try {
       // Make a POST request to /api/chatroom using Axios
-      const response = await axios.post('/api/chatrooms', { name });
+      const response = await axios.post("/api/chatrooms", { name });
       await Toast.fire({
-        icon: 'success',
+        icon: "success",
         title: `Success creating room ${response.data.chatRoom.name}`,
-        iconColor: 'green',
+        iconColor: "green",
       });
-      
+
       // Handle the response as needed
       onChatRoomCreated(response.data.chatRoom);
 
-      console.log('Response:', response.data);
+      console.log("Response:", response.data);
     } catch (error) {
-      console.error('Error creating chat room:', error.message);
+      console.error("Error creating chat room:", error.message);
       await Toast.fire({
-        icon: 'error',
+        icon: "error",
         title: `Error creating room, ${error.message}`,
-        iconColor: 'red',
+        iconColor: "red",
       });
     }
   };
   return (
     <div>
-      <div className='flex justify-end'>
+      <div className="flex justify-end">
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">Create Chatroom</Button>
+            <Button variant="outline" className="mb-4">
+              Create Chatroom
+            </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Create Chatroom</DialogTitle>
-              <DialogDescription>Make a new place to share your ideas!</DialogDescription>
+              <DialogDescription>
+                Make a new place to share your ideas!
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
@@ -131,7 +135,7 @@ console.log(email)
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
-            <TableHead>Join this room</TableHead>
+            <TableHead className="justify-end flex">Join this room</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -139,8 +143,14 @@ console.log(email)
             <TableRow key={chatRoom.id}>
               {/* <TableCell className="font-medium">{chatRoom.id}</TableCell> */}
               <TableCell>{chatRoom.name}</TableCell>
-              <TableCell><Link href={`/dashboard/Chatrooms/${chatRoom.id}`}>Join room {chatRoom.name}</Link></TableCell>
-
+              <TableCell className="justify-end flex">
+                <Button>
+                  <MessageCircleCode className="mr-2 h-4 w-4" />{" "}
+                  <Link href={`/dashboard/Chatrooms/${chatRoom.id}`}>
+                    Join room {chatRoom.name}
+                  </Link>
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -155,4 +165,3 @@ console.log(email)
     </div>
   );
 }
-
