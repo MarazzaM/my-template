@@ -21,7 +21,7 @@ docker compose up -d
 To run the schema
 
 ```bash
-prisma migrate dev
+npx prisma migrate dev
 ```
 Seed the db with 
 

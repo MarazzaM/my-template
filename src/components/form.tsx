@@ -71,7 +71,6 @@ export default function Form({ type }: { type: "login" | "register" }) {
           name="email"
           type="email"
           placeholder="panic@thedis.co"
-          defaultValue={"admin@admin.com"}
           autoComplete="email"
           required
           className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
@@ -88,8 +87,6 @@ export default function Form({ type }: { type: "login" | "register" }) {
           id="password"
           name="password"
           type="password"
-          defaultValue={"123456"}
-
           required
           className="mt-1 block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-black focus:outline-none focus:ring-black sm:text-sm"
         />

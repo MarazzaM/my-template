@@ -37,6 +37,7 @@ export const siteConfig = {
     twitter: "https://twitter.com/",
     github: "https://github.com/MarazzaM/",
     docs: "https://github.com/MarazzaM/",
+    repo:"https://github.com/MarazzaM/my-template",
   },
   sidebarNav:[
     {
